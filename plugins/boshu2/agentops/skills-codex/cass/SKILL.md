@@ -1,6 +1,6 @@
 ---
 name: cass
-description: Mine past agent sessions for working
+description: 'Mine past agent sessions for working Triggers: "cass", "mine past agent sessions for", "cass skill".'
 ---
 # cass Session Search
 
@@ -42,7 +42,7 @@ Your conversation history contains:
 - **Scope decisions** — "When did we decide NOT to do X?"
 - **Recovery moments** — What you searched for after context loss = what mattered
 
-**The insight:** Mining your past beats inventing new approaches. In the AgentOps loop the goal is prior-art first: mine as a research-phase move before writing a fresh plan or prompt, and feed what you find back into the corpus instead of re-deriving it.
+**The insight:** Mining your past beats inventing new approaches. CASS is a context source in the federated graph: it supplies cited episodic evidence on demand — mine as a research-phase move before writing a fresh plan or prompt. What it returns is evidence with source identity and freshness, never policy, and AgentOps maintains no merged corpus of its own around it.
 
 ## History-First Routing
 
@@ -206,7 +206,7 @@ When the right reference isn't obvious from titles, `grep -ni "SYMPTOM" referenc
 
 ## Scripts
 
-Scripts live under `scripts/`. They execute, never load — zero context tokens. None mutate state without explicit confirmation.
+Scripts live under `scripts/`. They execute, never load — zero context tokens. Consistent with the Safety Boundaries above, `recover.sh` and `quick_analysis.sh` may rebuild **derived index state** autonomously (pre-authorized: `doctor --fix`, `index --full`) and `multi_machine_search.sh` reads remote sources over ssh; none destroy source sessions, and nothing destructive (coredump/`.beads` deletion, `git reset --hard`, source edits) runs without explicit confirmation.
 
 | Script | Usage |
 |--------|-------|

@@ -1,6 +1,6 @@
 ---
 name: doc
-description: Generate and validate repo docs, READMEs
+description: 'Generate and validate repo docs, READMEs Triggers: "doc", "generate and validate repo docs", "doc skill".'
 ---
 # Doc Skill
 
@@ -11,6 +11,7 @@ Generate and validate documentation for any project. `--mode` selects the artifa
 ## Constraints
 
 - Ground every documentation claim in the current repository, because plausible but stale prose is a documentation defect.
+- When the subject is AgentOps itself, generated product and docs copy starts from the canonical category (`docs/contracts/ubiquitous-language.md`: the operations layer for agentic engineering) and preserves the ownership boundary; never describe AgentOps as an execution orchestrator, factory, corpus, or loop.
 - Research in bounded chunks against a coverage ledger, and hold finished docs to the conceptual-surprise floor (see [Research and depth kernels](#research-and-depth-kernels)).
 - In OSS scaffold mode, create missing docs only by default; never update or overwrite an existing doc unless the user explicitly confirms, because these files may contain operator-owned policy and project history. Treat `refresh` as a separate opt-in path and confirm its target writes with the user before proceeding.
 - Keep mode boundaries explicit and run the selected mode's validation, because default, README, and OSS outputs have different completion criteria.
@@ -42,7 +43,7 @@ Default mode is deliberately thin. Given a Doc command and target:
 
 1. **Detect project type** — `ls package.json pyproject.toml go.mod Cargo.toml` + existing `docs/`; classify CODING / INFORMATIONAL / OPS.
 2. **Run the command** — `discover` (grep undocumented funcs), `coverage` (documented vs total), `gen [feature]` (read code → stamp function/class markdown), `all`, or `validate`.
-3. **Write the report** to `.agents/doc/YYYY-MM-DD-<target>.md` (coverage %, generated, gaps, validation issues), then report coverage + gaps to the user.
+3. **Write the report** to `.agents/scratch/doc/YYYY-MM-DD-<target>.md` (coverage %, generated, gaps, validation issues), then report coverage + gaps to the user.
 
 Full step-by-step detail — grep recipes, function/class + code-map templates, the report skeleton, key rules, worked examples, and the troubleshooting table — lives in **[references/default-mode.md](references/default-mode.md)** (moved there in the generic-craft trim). Read it when you need the exact shapes; otherwise just do the three steps.
 
@@ -70,7 +71,7 @@ doc** failure mode — accurate, complete, and useless.
 
 ## Output Specification
 
-- **Path:** default-mode reports go to the artifact directory `.agents/doc/`; README mode updates the repository `README.md`; OSS scaffold mode creates missing root documentation only by default. The separate OSS `refresh` path may update an existing doc only after explicit user confirmation.
+- **Path:** default-mode reports go to the artifact directory `.agents/scratch/doc/`; README mode updates the repository `README.md`; OSS scaffold mode creates missing root documentation only by default. The separate OSS `refresh` path may update an existing doc only after explicit user confirmation.
 - **Filename:** default reports use the filename convention `YYYY-MM-DD-<target>.md`; README and OSS filenames follow their mode references.
 - **Format:** outputs are Markdown; the default report schema records coverage percentage, generated artifacts, gaps, and validation issues.
 - **Validation command:** validate the skill contract with `bash skills/doc/scripts/validate.sh`, then run the mode-specific validation required by its reference before reporting completion.

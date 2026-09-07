@@ -10,32 +10,58 @@
 <a href="https://discord.gg/QMnYtVcxk2"><img src="https://img.shields.io/badge/discord-join-3a3a3a?style=for-the-badge&labelColor=141414&logo=discord&logoColor=white" alt="discord"></a>
 <img src="https://img.shields.io/badge/license-MIT-3a3a3a?style=for-the-badge&labelColor=141414" alt="MIT">
 <img src="https://img.shields.io/badge/python-zero_deps-3a3a3a?style=for-the-badge&labelColor=141414&logo=python&logoColor=white" alt="Python, zero dependencies">
-<img src="https://img.shields.io/badge/works_with-claude_·_codex_·_cursor_·_copilot-141414?style=for-the-badge&labelColor=3a3a3a" alt="works with claude, codex, cursor, copilot">
+<img src="https://img.shields.io/badge/works_with-claude_·_codex_·_cursor_·_copilot_·_openclaw_·_hermes-141414?style=for-the-badge&labelColor=3a3a3a" alt="works with claude, codex, cursor, copilot, openclaw, hermes">
 </p>
 
 Your real coding-agent sessions already contain the rules you never wrote down: what “done” means, what you reject on sight, how you debug, how you design UI, and how you write when you are actually working.
 
 Emulo mines selected evidence from those sessions — Claude Code, Codex, Copilot CLI, OpenCode, and Google Antigravity logs out of the box — into a private working profile your agent reads before every task. Separate layers for work, design, writing, and video mean the right part of you loads for the right task.
 
+The mined profile loads where your agents already live: Claude Code and Codex natively, Cursor, Gemini, and OpenCode through explicit adapters, and OpenClaw and Hermes Agent as a standard skill ([guide](docs/OPENCLAW_HERMES.md)).
+
 The [Emulo Proof v1 methodology](docs/proof/README.md) is an unexecuted methodology until a separately approved evidence release exists.
 
-## Open source and Emulo Pro
+## The video layer, and where it comes from
 
-Emulo's local engine stays MIT licensed and useful without an account. Your
-session extraction, redaction, caches, profile, and agent adapters remain on
-your machine unless you explicitly choose a model provider for mining.
+<p align="center"><img src="assets/vercel-spec-loop.webp" width="760" alt="A spec commercial made in Claude Design"></p>
 
-[Emulo Pro](https://emulo.vercel.app/#pricing) is the optional hosted layer for
-client-encrypted approved-generation continuity across up to five devices,
-managed pairing and revocation, conflict-preserving history, and a bounded
-encrypted recovery/export window. Raw session evidence, decryption keys, and
-model-provider tokens do not enter the hosted service. Ending Pro access never
-disables local Emulo, its history, or rollback.
+A spec commercial, made in Claude Design. No After Effects and no motion software:
+the whole thing is a composition rendered out to video.
 
-The hosted Worker source is public so its authentication, checkout, webhook,
-and entitlement rules can be audited. Production credentials and customer
-records are held by Cloudflare and Polar and are never stored in Git. Public
-source code is not public access to the hosted service or its data.
+It is **spec work**. It was not commissioned by Vercel and it was not made for
+them. A brand was picked to see how far the motion could go.
+
+It is here because `emulo:video` is mined from sessions like the one that
+produced it. The other layers work the same way: the profile is not a template,
+it is what survived from real work.
+
+## Install
+
+Inside Claude Code:
+
+```text
+/plugin marketplace add ohad6k/emulo
+/plugin install emulo@emulo
+```
+
+Inside Codex:
+
+```bash
+codex plugin marketplace add ohad6k/emulo --ref v0.6.2 --json
+codex plugin add emulo@emulo --json
+```
+
+Then run `emulo:mine` and point it at your session history. Everything below explains what that produces and why. If you want the CLI instead of the plugin, see [Quickstart](#quickstart).
+
+## Open source and privacy
+
+Emulo is MIT licensed, free, and works without an account. There is nothing to
+buy and no sign-in.
+
+Session extraction, redaction, caches, the profile itself, and the agent
+adapters all stay on your machine. The one exception is mining: if you point it
+at a hosted model, the selected evidence goes to that provider. Point it at a
+local model and the whole run stays on your machine.
 
 ## Not memory
 
@@ -135,6 +161,21 @@ Nobody wrote those rules down. They came out of one person's own history, with r
 
 > This is an example. Yours is mined from your logs and will read nothing like it.
 
+## The usage report
+
+Mining answers "who is this person." The usage report answers a different question: where are you losing time with the model.
+
+```bash
+python emulo.py --coach                   # every source it can find
+python emulo.py --coach --source claude   # Claude Code only
+```
+
+It runs before any mining, makes no model call, and finishes in seconds. It counts what your own messages already show: asks you sent three times in a row without changing them, context you re-explained after the agent lost it, runs where you rephrased the same request instead of adding the missing constraint, and how often you open a turn by correcting the last answer.
+
+Every finding prints the dated messages behind it. Checks that come in under their bar are printed with their counts as well, so a clean result reads as a result rather than as silence.
+
+It reads only the messages you typed, which is all Emulo keeps. It cannot see cost, tokens, tool calls, or whether the agent was right, and it never scores those.
+
 ## The card
 
 After mining, `python emulo.py --card` renders your profile as a shareable card: archetype, top laws ranked by distinct supporting session receipts, coverage stats, and one sharp truth.
@@ -157,14 +198,46 @@ Then tell your agent:
 run emulo
 ```
 
-That installs the bootstrap and creates a read-only full-history mining plan. Your agent must show the cost and wait for approval before model work. It does not install native namespaced routing.
+That installs the bootstrap and creates a read-only full-history mining plan. Your agent must show the cost and wait for approval before model work.
+
+Once your profile exists, the bootstrap offers the native plugin so you also get namespaced `emulo:` routing. It asks first and takes a no. In Codex it can run the install itself; in Claude Code `/plugin` is typed by you, so it hands you the two exact lines to paste.
+
+### Install the CLI
+
+If you'd rather run Emulo yourself instead of through an agent:
+
+```bash
+pip install emulo
+```
+
+That puts `emulo` on your path. `emulo` runs the miner, `emulo --dry-run` prints the read-only plan first, and `emulo mcp` runs the MCP server below. `uv tool install emulo` works the same way, and `uvx emulo` runs it without installing.
+
+`emulo` writes `RUN_ME.md` next to your chunks. It is self-contained, so the whole remaining step is one line to your agent:
+
+```text
+read emulo-out/RUN_ME.md and follow it
+```
+
+Your agent makes one pass per chunk, merges them, writes `you.md`, and prints the install command. Nothing to paste and nothing else to download.
+
+### Check the receipts
+
+A profile is only worth loading if its evidence is real. The failure that matters is not a missing rule, it is a confident rule quoting something you never said:
+
+```bash
+emulo verify you.md
+```
+
+It pulls every quote out of the profile and searches the mined sessions for it. Quotes it cannot find are reported and the command exits non-zero, because a receipt that cannot be traced was invented. Quotes resting on a single session are flagged separately: one session is context, not a rule. Add `--json` for machine-readable output, including which session ids support each quote.
+
+This checks what is mechanically checkable. Whether a rule is vague, generic, or true of every developer alive is still a judgment call, and still yours.
 
 ### Native Codex plugin
 
 The native plugin adds `emulo:mine`, `emulo:work`, `emulo:design`, `emulo:write`, and `emulo:video`:
 
 ```bash
-codex plugin marketplace add ohad6k/emulo --ref v0.5.0 --json
+codex plugin marketplace add ohad6k/emulo --ref v0.6.2 --json
 codex plugin add emulo@emulo --json
 ```
 
@@ -172,7 +245,7 @@ The plugin-install command itself scans no logs, writes no private profile state
 
 ### Native Claude Code plugin
 
-The Claude Code plugin exposes the same four skills. Install it from inside Claude Code:
+The Claude Code plugin exposes the same five skills. Install it from inside Claude Code:
 
 ```text
 /plugin marketplace add ohad6k/emulo
@@ -277,7 +350,7 @@ See [SECURITY.md](SECURITY.md) for the exact boundary.
 The legacy extractor remains available and backward compatible:
 
 ```bash
-curl -O https://raw.githubusercontent.com/ohad6k/emulo/v0.5.0/emulo.py
+curl -O https://raw.githubusercontent.com/ohad6k/emulo/v0.6.2/emulo.py
 python emulo.py --dry-run
 python emulo.py --chunks 4 --out emulo-out
 ```

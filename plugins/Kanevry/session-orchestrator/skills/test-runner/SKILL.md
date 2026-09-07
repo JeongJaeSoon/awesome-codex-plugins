@@ -201,8 +201,8 @@ If the glab query fails, log the error and proceed with an empty fingerprint set
 
 | Severity | Action |
 |----------|--------|
-| `critical` | Auto-create issue — no AUQ. Label: `from:test-runner,priority:critical` |
-| `high` | Auto-create issue — no AUQ. Label: `from:test-runner,priority:high` |
+| `critical` | Auto-create issue — no AUQ. Label: `from:test-runner,priority::critical` |
+| `high` | Auto-create issue — no AUQ. Label: `from:test-runner,priority::high` |
 | `medium` | Batched AUQ triage (see below) |
 | `low` | Batched AUQ triage (see below) |
 
@@ -216,11 +216,11 @@ Group `medium` and `low` findings and present via a single `AskUserQuestion` cal
 AskUserQuestion({
   questions: [{
     question: `<N> medium/low findings to triage. How to handle?`,
-    header: "Test-runner triage",
+    header: "Triage",
     options: [
       {
         label: "Create all (Recommended)",
-        description: "File <N> new issues, all with label from:test-runner"
+        description: "Files <N> new issues at once, all with label from:test-runner — fastest, and you can still close any of them afterwards."
       },
       {
         label: "Review each",

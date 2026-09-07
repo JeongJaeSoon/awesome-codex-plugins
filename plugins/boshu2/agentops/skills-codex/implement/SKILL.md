@@ -1,6 +1,6 @@
 ---
 name: implement
-description: Execute one bounded RED to GREEN experiment
+description: 'Execute one bounded RED to GREEN experiment Triggers: "implement", "implement this bead", "run the experiment". Full plan-to-validation requests route to rpi.'
 ---
 # Implement
 
@@ -43,15 +43,18 @@ proof.
 On discovering a live consumer of the change outside the declared write scope
 — a test asserting the old path, a generated twin, a gate reading the moved
 file — stop and report the exact file and line to the caller. Do not silently
-expand scope to absorb it. One repair revision of the intent is the maximum
-before escalating to the caller; the 2026-07-15 heal-skill fold took three
-intent revisions (lineage under `.agents/ao/intents/sha256/26a4f2be...eb48`)
-because hand-enumerated scope kept missing live consumers.
+expand scope to absorb it or revise the intent from Implement. The caller may
+revise the source intent and start a separate invocation.
 
 Before declaring GREEN, self-audit the diff for mocks, placeholders, TODO
-stubs, and hardcoded fixture values standing in for real behavior. A check
-that passes against a placeholder is not evidence for the acceptance
-criterion; either finish the behavior or report it as not built.
+stubs, hardcoded fixture values, weakened assertions, regenerated goldens,
+widened tolerances, suppression directives, or specification edits standing
+in for real behavior. When the diff changes a test, gate, fixture, golden, or
+acceptance source, state why the original intent requires that change and
+confirm that green came from the implemented behavior rather than a weakened
+oracle. A check that passes against a substitute or weakened oracle is not
+evidence for the acceptance criterion; either finish the behavior or report it
+as not built.
 
 ## Boundary
 

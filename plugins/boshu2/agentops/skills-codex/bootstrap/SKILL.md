@@ -1,12 +1,13 @@
 ---
 name: bootstrap
-description: Initialize minimal AgentOps documentation
+description: 'Initialize explicitly requested, missing Triggers: "bootstrap AgentOps", "initialize AgentOps docs".'
 ---
 # Bootstrap — minimal project setup
 
-Bootstrap fills only missing AgentOps entry documents and the default durable
-verdict directory. It does not initialize Git, install hooks, create tracker
-state, start runtimes, or impose a delivery workflow.
+Bootstrap fills only explicitly requested, missing AgentOps entry documents and,
+when requested, the durable verdict directory. It does not initialize Git,
+install hooks, create tracker state, start runtimes, or impose a delivery
+workflow.
 
 Never-overwrite is what makes bootstrap safe to run on any repository: a setup
 step that can only add is idempotent by construction, while one that can
@@ -32,8 +33,16 @@ PRODUCT.md written confidently is worse than a question.
 6. Stop.
 
 Typical documents are `PRODUCT.md`, `GOALS.md`, `AGENTS.md`, and a README section
-that explains the one-pass loop. Repositories remain free to use their own Git,
-CI, tracker, release, and deployment policies.
+that explains the RPI traversal. Generated product copy starts from the
+operations-layer category and preserves the ownership boundary. Repositories
+remain free to use their own Git, CI, tracker, release, and deployment
+policies.
+
+**Naming.** Three surfaces share the word "bootstrap"; they are distinct. This
+skill authors missing entry documents. `ao init` is the CLI command that creates
+the local evidence and verdict directories (`.agents/ao/**`). `ao session
+bootstrap` is a read-only session command that reports which local orientation
+files are present. This skill invokes neither.
 
 ## Non-goals
 
@@ -50,7 +59,7 @@ failed writes, and validation observations. Do not include a next action.
 
 ## References
 
-- [Goals](../goals/SKILL.md)
+- [Fitness](../fitness/SKILL.md)
 - [Product](../product/SKILL.md)
 - [Documentation](../doc/SKILL.md)
 - [Examples](references/examples.md)

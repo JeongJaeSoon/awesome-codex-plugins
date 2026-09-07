@@ -1,6 +1,6 @@
 ---
 name: skill-builder
-description: Create a metadata-complete AgentOps skill
+description: 'Create a metadata-complete AgentOps skill Triggers: "create a skill", "scaffold skill", "absorb external skill", "new skill", "heal skill", "repair skill hygiene", "audit skill structure", "check skill package".'
 ---
 # Skill Builder — Create, heal, and audit skill packages
 
@@ -107,8 +107,8 @@ bash skills/skill-builder/scripts/audit.sh [--strict] [--json <path>] skills/<sl
 ```
 
 It combines the structural result with deterministic authoring checks and an
-advisory quality score. It is not the core `Validate` phase, does not write a
-`verdict.v2`, and has no delivery authority. Check definitions live in
+advisory static package-readiness score. It is not the core `Validate` phase,
+does not write a `verdict.v2`, and has no delivery authority. Check definitions live in
 [audit-checks.md](references/audit-checks.md); density scoring is described in
 [context-density-checks.md](references/context-density-checks.md).
 
@@ -122,8 +122,8 @@ skills/<slug>/
 └── scripts/validate.sh
 ```
 
-The build report is `.agents/audits/<slug>-build.json` and conforms to
-`schemas/build-report.json`. Deep audit JSON conforms to
+The build report is `.agents/scratch/skill-builder/<slug>-build.json` and
+conforms to `schemas/build-report.json`. Deep audit JSON conforms to
 `schemas/audit-report.json`. Generated inventories and runtime projections are
 not additional sources of truth. The caller owns any subsequent edit or
 invocation.

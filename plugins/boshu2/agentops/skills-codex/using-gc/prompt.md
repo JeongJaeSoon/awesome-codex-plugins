@@ -1,6 +1,6 @@
 # using-gc
 
-Operate an explicitly selected Gas City as an optional executor for supplied packets. Triggers: "using gc", "gas city", "dispatch through gc".
+Operate a caller-selected Gas City 1.4 with upstream registry packs and native run-centered surfaces while keeping GC runtime state out of AgentOps verdicts. Triggers: "using gc", "gas city", "drive the mayor", "dispatch through gc".
 
 ## Instructions
 

@@ -1,6 +1,6 @@
 # rpi
 
-Run one bounded Plan, Implement, and fresh Validate experiment, then report and stop. Triggers: "run rpi", "feed this through the loop", "research-plan-implement".
+Coordinate one RPI traversal: one bounded Plan, Implement, and fresh Validate experiment, then report and stop. Triggers: "run rpi", "run one traversal", "execute this plan", orchestration or worker delegation that implements changes.
 
 ## Instructions
 

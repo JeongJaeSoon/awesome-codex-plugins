@@ -1,11 +1,12 @@
 ---
 name: agentpack-handoff
 description: Package current work for another real agent session.
+license: AGPL-3.0-only
 ---
 
 # AgentPack Handoff
 
-Use when the user invokes `@agentpack-handoff [name]` in Codex or `/agentpack-handoff [name]` in Claude Code.
+Use when the user invokes `$agentpack-handoff [name]` in Codex or `/agentpack-handoff [name]` in Claude Code.
 
 Inspect the current task, acceptance criteria, work completed and remaining, decisions, blockers, next action, Git-visible changes, and real validation evidence. Create the mandatory structured report, then call MCP `create_handoff(report=..., name="<requested name>")`. If MCP is unavailable, run `agentpack handoff create --input <report.json> --name "<requested name>"`.
 
